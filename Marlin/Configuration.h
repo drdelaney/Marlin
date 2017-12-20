@@ -250,7 +250,7 @@
 // The pullups are needed if you directly connect a mechanical endswitch between the signal and ground pins.
 const bool X_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Y_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Z_MIN_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+const bool Z_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool X_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Y_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
@@ -340,9 +340,10 @@ const bool E_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define Z_MAX_LENGTH (base_max_pos[2] - base_min_pos[2])
 //============================= Bed Auto Leveling ===========================
 
-#if !defined(PB_MCF) && !defined(PB_BOCUSINI)
+//#if !defined(PB_MCF) && !defined(PB_BOCUSINI)
+// Force on, ignoring the type: drd
   #define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
-#endif
+//#endif
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 
@@ -355,16 +356,16 @@ const bool E_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #define FRONT_PROBE_BED_POSITION (bed_level_probe_offset[1] <= 10 ? 10 : bed_level_probe_offset[1])
 
   // these are the offsets to the prob relative to the extruder tip (Hotend - Probe).  Default below prevents Metal Plus from probing off-bed.
-  #define X_PROBE_OFFSET_FROM_EXTRUDER_DEFAULT 20
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER_DEFAULT 0
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER_DEFAULT 0
+  #define X_PROBE_OFFSET_FROM_EXTRUDER_DEFAULT 20 // THIS PROBABLY NEEDS TO BE CHANGED
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER_DEFAULT 0  // THIS PROBABLY NEEDS TO BE CHANGED
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER_DEFAULT 0  // THIS PROBABLY NEEDS TO BE CHANGED
 
-  #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
+  #define Z_RAISE_BEFORE_HOMING 10 //4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
 
   #define XY_TRAVEL_SPEED 5000         // X and Y axis travel speed between probes, in mm/min
 
-  #define Z_RAISE_BEFORE_PROBING 4    //How much the extruder will be raised before traveling to the first probing point.
+  #define Z_RAISE_BEFORE_PROBING 10 //4    //How much the extruder will be raised before traveling to the first probing point.
   #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
 
 
@@ -673,15 +674,16 @@ const bool E_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // leaving it undefined or defining as 0 will disable the servo subsystem
 // If unsure, leave commented / disabled
 //
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+#define NUM_SERVOS 1 //3 // Servo index starts with 0 for M280 command
 
 // Servo Endstops
 //
 // This allows for servo actuated endstops, primary usage is for the Z Axis to eliminate calibration or bed height changes.
 // Use M206 command to correct for switch height offset to actual nozzle height. Store that setting with M500.
 //
-//#define SERVO_ENDSTOPS {-1, -1, 0} // Servo index for X, Y, Z. Disable with -1
+#define SERVO_ENDSTOPS {-1, -1, 0} // Servo index for X, Y, Z. Disable with -1
 //#define SERVO_ENDSTOP_ANGLES {0,0, 0,0, 70,0} // X,Y,Z Axis Extend and Retract angles
+#define SERVO_ENDSTOP_ANGLES {0,0, 0,0, 10, 90} // X,Y,Z Axis Extend and Retract angles
 
 #include "Configuration_adv.h"
 #include "thermistortables.h"
